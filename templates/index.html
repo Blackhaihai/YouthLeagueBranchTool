@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片上传</title>
+</head>
+<body>
+    <h1>上传图片</h1>
+
+    <!-- 显示提示信息 -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+        姓名: <input type="text" name="name" required><br>
+        班级: <input type="text" name="class" required><br>
+        身份证号码: <input type="text" name="id_number" required><br>
+        图片: <input type="file" name="file" accept="image/*" required><br>
+        <button type="submit">上传</button>
+    </form>
+
+    <script>
+        document.getElementById('uploadForm').onsubmit = async function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const response = await fetch('/check_name', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+
+            if (data.exists) {
+                const confirmUpload = confirm("该用户名称已经上传过文件，确认后将替换之前的文件。要继续吗？");
+                if (confirmUpload) {
+                    this.submit();
+                }
+            } else {
+                this.submit();
+            }
+        }
+    </script>
+    <a href="/allimg">查看已上传图片</a>
+</body>
+</html>
+</body>
+</html>

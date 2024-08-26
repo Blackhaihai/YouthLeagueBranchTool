@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>已上传图片</title>
+    
+</head>
+<body>
+    <h1>所有上传的图片</h1>
+    <a href="/index">返回上传</a>
+    <!-- 显示提示信息 -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <!-- 显示上传日志 -->
+    <table border="1">
+        <tr>
+            <th>姓名</th>
+            <th>上传时间</th>
+            <th>图片</th>
+        </tr>
+        {% for log in logs %}
+        {% set log_parts = log.split() %}
+        <tr>
+            <td>{{ log_parts[0] }}</td>
+            <td>{{ log_parts[2] }} {{ log_parts[3] }}</td>
+            <td>
+                <img src="{{ url_for('uploaded_file', filename=log_parts[4]) }}" alt="Uploaded Image" width="100">
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+  
+</body>
+</html>
