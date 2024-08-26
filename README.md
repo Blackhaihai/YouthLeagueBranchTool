@@ -6,5 +6,6 @@
 安装时如果更改位置，需要修改app.py文件内
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'的路径位置以确保正常使用
 安装python相应库即可运行 
-
+使用时需要下载img的自建识别库
+放入 Program Files\Tesseract-OCR\tessdata 才能使用
 REQUIRED_TEXTS = ["  "] 内为需要识别截图的文字，方法为全部匹配若[]内关键词其中有一个不存在则这张上传的图片就判断为不符合
